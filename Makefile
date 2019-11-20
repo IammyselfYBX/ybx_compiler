@@ -20,6 +20,7 @@ CFLAGS = -c -g -Wall -Wswitch-enum -ansi -pedantic -DDEBUG  --std=c99
 INCLUDES = \
 
 $(TARGET):$(OBJS)
+	cd ../; mkdir bin;
 	cd ./memory; $(MAKE);
 	cd ./debug; $(MAKE);
 	$(CC) $(OBJS) -o $@ -lm
