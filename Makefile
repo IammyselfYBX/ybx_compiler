@@ -1,4 +1,4 @@
-TARGET = ../bin/ybx 
+TARGET = bin/ybx 
 CC=gcc
 OBJS = \
   lex.yy.o\
@@ -20,13 +20,13 @@ CFLAGS = -c -g -Wall -Wswitch-enum -ansi -pedantic -DDEBUG  --std=c99
 INCLUDES = \
 
 $(TARGET):$(OBJS)
-	cd ../; mkdir bin;
+	mkdir bin;
 	cd ./memory; $(MAKE);
 	cd ./debug; $(MAKE);
 	$(CC) $(OBJS) -o $@ -lm
   
 clean:
-	rm -f ../bin/ybx *.o lex.yy.c y.tab.c y.output y.tab.h *~ debug/*.o memory/*.o
+	rm -rf ./bin *.o lex.yy.c y.tab.c y.output y.tab.h *~ debug/*.o memory/*.o
 
 install:
 	make
