@@ -1,4 +1,4 @@
-# ybxcompiler
+# ybx_compiler
 ### 终端词法语法分析器
 ---
 
