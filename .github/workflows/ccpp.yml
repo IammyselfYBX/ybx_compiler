@@ -1,14 +1,19 @@
 name: C/C++ CI
 
-on: [push]
+on: 
+  push:
+    branches:
+    - master
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     
     steps:
     - uses: actions/checkout@v1
+    - name: Install Dependencies
+      run: sudo apt-get install yacc lex
     - name: make
       run: make
     - run: echo success!
