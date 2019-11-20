@@ -69,7 +69,7 @@ printf("hello world\n");
         &emsp;3)Variable            *variable;					// 变量列表<br>
         &emsp;4)FunctionDefinition  *function_list;				// 函数列表<br>
         &emsp;5)StatementList       *statement_list;			// 语句列表（表达式也是一种语句）<br>
-        &emsp;6)int                 current_line_number;		// 当前行号，当出现错误时用于指明出错位置的行号<br>
+        &emsp;6)int                 current_line_number;		// 当前行号，当出现错误时用于指明出错位置的行号
 
     > 4.词法分析 ———— ybx.l<br>
     > 5.分析树的构建 ———— ybx.y、create.c<br>
@@ -84,10 +84,3 @@ printf("hello world\n");
 ```bash
 valgrind ybx
 ```
-i=1;
-if (i == 0) {
-    print("i == 0\n");
-} else  {
-    print("we don't know \n"); 
-}
-
