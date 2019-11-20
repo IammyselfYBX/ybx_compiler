@@ -1,4 +1,4 @@
-TARGET = bin/ybx 
+TARGET = ybx 
 CC=gcc
 OBJS = \
   lex.yy.o\
@@ -26,7 +26,7 @@ $(TARGET):$(OBJS)
 	$(CC) $(OBJS) -o $@ -lm
   
 clean:
-	rm -rf ./bin *.o lex.yy.c y.tab.c y.output y.tab.h *~ debug/*.o memory/*.o
+	rm -rf ybx *.o lex.yy.c y.tab.c y.output y.tab.h *~ debug/*.o memory/*.o
 
 install:
 	make
