@@ -49,7 +49,7 @@
 
 
 
-// 编译时的错误
+// 编译时的错误枚举
 typedef enum
 {
 	PARSE_ERR = 1,						// 语法分析错误
@@ -58,7 +58,7 @@ typedef enum
 	COMPILE_ERROR_COUNT_PLUS_1
 } CompileError;
 
-// 运行时错误
+// 运行时错误枚举
 typedef enum 
 {
 	VARIABLE_NOT_FOUND_ERR = 1,			// 变量没找到
@@ -109,11 +109,11 @@ typedef enum
 	STRING_EXPRESSION,							// 字符串表达式
 	IDENTIFIER_EXPRESSION,						// 定义
 	ASSIGN_EXPRESSION,							// 赋值
-	ADD_EXPRESSION,								// 加法
-	SUB_EXPRESSION,								// 减法
-	MUL_EXPRESSION,								// 乘法
-	DIV_EXPRESSION,								// 除法
-	MOD_EXPRESSION,								// 求于
+	ADD_EXPRESSION,								// 加法 +
+	SUB_EXPRESSION,								// 减法 -
+	MUL_EXPRESSION,								// 乘法 *
+	DIV_EXPRESSION,								// 除法 /
+	MOD_EXPRESSION,								// 求于 %
 	EQ_EXPRESSION,								// 等于
 	NE_EXPRESSION,								// 不等于
 	GT_EXPRESSION,								// 大于
@@ -124,7 +124,7 @@ typedef enum
 	LOGICAL_OR_EXPRESSION,						// ||
 	MINUS_EXPRESSION,							// 取负号
 	FUNCTION_CALL_EXPRESSION,					// 函数调用
-	NULL_EXPRESSION,							// 空表达式
+	NULL_EXPRESSION,							// 空表达式null
 	EXPRESSION_TYPE_COUNT_PLUS_1
 } ExpressionType;
 
@@ -138,7 +138,7 @@ typedef struct ArgumentList_tag
 // 赋值表达式
 typedef struct 
 {
-	char        *variable;						//变量名（即等号左边的变量）
+	char *variable;								//变量名（即等号左边的变量）
 	Expression  *operand;						// 操作数（即等号右边的变量）
 } AssignExpression;
 

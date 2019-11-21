@@ -250,8 +250,8 @@ static void eval_binary_int(YBX_Interpreter *inter, ExpressionType operator,
     case MOD_EXPRESSION:											// 求余
         result->u.int_value = left % right;
         break;
-    case LOGICAL_AND_EXPRESSION:        /* FALLTHRU */
-    case LOGICAL_OR_EXPRESSION:								// 逻辑与或
+    case LOGICAL_AND_EXPRESSION:                                /* FALLTHRU */
+    case LOGICAL_OR_EXPRESSION:								    // 逻辑与或
         DBG_panic(("bad case...%d", operator));
         break;
     case EQ_EXPRESSION:												// 等于
@@ -432,8 +432,8 @@ YBX_Value ybx_eval_binary_expression(YBX_Interpreter *inter, LocalEnvironment *e
     YBX_Value   right_val;
     YBX_Value   result;
 
-    left_val = eval_expression(inter, env, left);													// 估算运算符号左边的表达式		
-    right_val = eval_expression(inter, env, right);												// 估算运算负号右边的表达式
+    left_val = eval_expression(inter, env, left);										// 估算运算符号左边的表达式		
+    right_val = eval_expression(inter, env, right);										// 估算运算负号右边的表达式
 
     if (left_val.type == YBX_INT_VALUE
         && right_val.type == YBX_INT_VALUE)												// 左边是整形，右边是整形
@@ -458,7 +458,7 @@ YBX_Value ybx_eval_binary_expression(YBX_Interpreter *inter, LocalEnvironment *e
                            &result, left->line_number);
     }
 	else if (left_val.type == YBX_DOUBLE_VALUE
-               && right_val.type == YBX_INT_VALUE)											// 左边是浮点型，右边是整形，结果要转成浮点型
+               && right_val.type == YBX_INT_VALUE)										// 左边是浮点型，右边是整形，结果要转成浮点型
 	{
         right_val.u.double_value = right_val.u.int_value;
         eval_binary_double(inter, operator,
@@ -466,7 +466,7 @@ YBX_Value ybx_eval_binary_expression(YBX_Interpreter *inter, LocalEnvironment *e
                            &result, left->line_number);
     }
 	else if (left_val.type == YBX_BOOLEAN_VALUE
-               && right_val.type == YBX_BOOLEAN_VALUE)								// 两边都是布尔型
+               && right_val.type == YBX_BOOLEAN_VALUE)								    // 两边都是布尔型
 	{
         result.type = YBX_BOOLEAN_VALUE;
         result.u.boolean_value
@@ -476,12 +476,12 @@ YBX_Value ybx_eval_binary_expression(YBX_Interpreter *inter, LocalEnvironment *e
                                   left->line_number);
     } 
 	else if (left_val.type == YBX_STRING_VALUE
-               && operator == ADD_EXPRESSION)												// 左边是字符串，运算符是加号（因此事字符串相加）
+               && operator == ADD_EXPRESSION)											// 左边是字符串，运算符是加号（因此事字符串相加）
 	{
         char    buf[LINE_BUF_SIZE];
         YBX_String *right_str;
 
-        if (right_val.type == YBX_INT_VALUE)													// 右边是整形
+        if (right_val.type == YBX_INT_VALUE)											// 右边是整形
 		{
             sprintf(buf, "%d", right_val.u.int_value);							
             right_str = ybx_create_crowbar_string(inter, MEM_strdup(buf));
@@ -745,7 +745,7 @@ static YBX_Value call_crowbar_function(YBX_Interpreter *inter, LocalEnvironment 
     return value;
 }
 
-// 调用调用表达式
+// 调用调用表达式 主要是用来区分ybx编译器的函数还是C语言的函数
 static YBX_Value eval_function_call_expression(YBX_Interpreter *inter, LocalEnvironment *env,
                               Expression *expr)
 {
@@ -781,12 +781,12 @@ static YBX_Value eval_expression(YBX_Interpreter *inter, LocalEnvironment *env,
                 Expression *expr)
 {
     YBX_Value   v;
-    switch (expr->type)																					// 根据表达式的类型选择相应的表达式调用
+    switch (expr->type)																			// 根据表达式的类型选择相应的表达式调用
 	{
     case BOOLEAN_EXPRESSION:																	// 布尔表达式
         v = eval_boolean_expression(expr->u.boolean_value);
         break;
-    case INT_EXPRESSION:																				// 整形表达式
+    case INT_EXPRESSION:																		// 整形表达式
         v = eval_int_expression(expr->u.int_value);
         break;	
     case DOUBLE_EXPRESSION:																		// 浮点表达式
@@ -803,7 +803,7 @@ static YBX_Value eval_expression(YBX_Interpreter *inter, LocalEnvironment *env,
                                    expr->u.assign_expression.variable,
                                    expr->u.assign_expression.operand);
         break;
-    case ADD_EXPRESSION:			/* FALLTHRU */										// 二元表达式
+    case ADD_EXPRESSION:			/* FALLTHRU */										        // 二元表达式
     case SUB_EXPRESSION:			/* FALLTHRU */
     case MUL_EXPRESSION:			/* FALLTHRU */
     case DIV_EXPRESSION:				/* FALLTHRU */
@@ -819,19 +819,19 @@ static YBX_Value eval_expression(YBX_Interpreter *inter, LocalEnvironment *env,
                                        expr->u.binary_expression.left,
                                        expr->u.binary_expression.right);
         break;
-    case LOGICAL_AND_EXPRESSION:/* FALLTHRU */									// 逻辑与或表达式
+    case LOGICAL_AND_EXPRESSION:/* FALLTHRU */									            // 逻辑与或表达式
     case LOGICAL_OR_EXPRESSION:
         v = eval_logical_and_or_expression(inter, env, expr->type,
                                            expr->u.binary_expression.left,
                                            expr->u.binary_expression.right);
         break;
-    case MINUS_EXPRESSION:																		// 负值表达式
+    case MINUS_EXPRESSION:																	// 负值表达式
         v = ybx_eval_minus_expression(inter, env, expr->u.minus_expression);
         break;
-    case FUNCTION_CALL_EXPRESSION:														// 函数调用表达式
+    case FUNCTION_CALL_EXPRESSION:														    // 函数调用表达式
         v = eval_function_call_expression(inter, env, expr);
         break;
-    case NULL_EXPRESSION:																			// 空表达式
+    case NULL_EXPRESSION:																	// 空表达式
         v = eval_null_expression();
         break;
     case EXPRESSION_TYPE_COUNT_PLUS_1:  /* FALLTHRU */

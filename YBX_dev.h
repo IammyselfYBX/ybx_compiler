@@ -34,7 +34,7 @@ typedef struct {
     char *name;
 } YBX_NativePointerInfo;
 
-// 值的类型
+// 值的全部类型枚举
 typedef enum {
     YBX_BOOLEAN_VALUE = 1,			// 布尔类型
     YBX_INT_VALUE,					// 整形
@@ -47,13 +47,13 @@ typedef enum {
 // 指针类型
 typedef struct {
     YBX_NativePointerInfo       *info;
-    void                        *pointer;
+    void                        *pointer;               //这里为了容纳各种类型的指针,建议选择使用 void*
 } YBX_NativePointer;
 
 // 值（整形、布尔、字符串、浮点、指针等等）
 typedef struct {
-    YBX_ValueType       type;
-    union {
+    YBX_ValueType       type;                           //用来区分类型
+    union {                                             //实际是存储在联合体当中的
         YBX_Boolean     boolean_value;					// 布尔类型
         int             int_value;						// 整形
         double          double_value;					// 浮点型
