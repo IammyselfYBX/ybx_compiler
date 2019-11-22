@@ -23,6 +23,14 @@ To install :
 
   6. IF you want to uninstall , Run "make uninstall"
 ```
+#### Actions
+- step 1
+![actions](picture/1.png) 
+- step 2
+![actions](picture/2.png)
+- step 3
+![actions](picture/3.png) 
+
 #### 应用介绍
 - 一、程序结构
 &emsp;ybx程序支持<b>顶层结构<b>，即使在函数外面也可以书写执行语句，即不需要写
@@ -70,6 +78,7 @@ print("YBX is the most handsome man in NCEPU\n");
 
 
 ##### 各文件介绍
+
 - 一、模块
     主要是由3个模块组成
     > 主程序模块<br>
