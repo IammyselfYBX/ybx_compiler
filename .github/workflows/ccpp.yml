@@ -18,4 +18,4 @@ jobs:
       run: make
     - run: echo success!
     - name: ybx execute
-      run: ./ybx ./test/test.ybx
+      run: ./bin/ybx ./test/test.ybx
