@@ -29,11 +29,11 @@ To install :
 - step 2
 ![actions](picture/2.png)
 - step 3
-![actions](picture/3.png) 
+![actions](picture/.png) 
 
 #### 应用介绍
 - 一、程序结构
-&emsp;ybx程序支持<b>顶层结构<b>，即使在函数外面也可以书写执行语句，即不需要写
+&emsp;ybx程序支持<b>顶层结构</b>，即使在函数外面也可以书写执行语句，即不需要写
 ```c++
 int main(int argc, char *argv[])
 {
@@ -56,25 +56,39 @@ print("YBX is the most handsome man in NCEPU\n");
 ```
 - 二、变量
     > 1.实现布尔类型、整数类型、实数型、字符串类型、指针类型<br>
-    > 2.变量使用的时候不需要声明就可以直接使用，在赋初值的时候就包含声明的过程，所以，如果直接引用一个还没有付初值的变量会报错<br>
-    > 3.变量命名与C语言同， 字母开头+[数字/字母]*
+    > 2.变量使用的时候<b>不需要声明</b>就可以直接使用，在赋初值的时候就包含声明的过程，所以，如果直接引用一个还没有付初值的变量会报错<br>
+    > 3.变量命名格式：字母开头+[数字/字母]*
 
 - 三、运算符
 
 |    运算符    |               符号               |
 |   :----:    |             :----:               |
-| 算术运算符    |       +  -  *  /  %             |
-| 关系运算符    |	<  <=   ==   >   >=   !=      |
-| 逻辑运算符	|           ！  &&  \|\|          | - 取反
-| 位运算符	    |        <<   >>   ~  |  ^  &     | ^ | & ~
+| 算术运算符    |+&emsp;-&emsp;*&emsp;/&emsp;%    |
+| 关系运算符    |<&emsp;<=&emsp;==&emsp;>&emsp;>=&emsp;!= |
+| 逻辑运算符	|           ！&emsp;&&&emsp;\|\|&emsp;   | - 取反
+| 位运算符	    | << &emsp; >> &emsp; ~ &emsp; \| &emsp; ^ &emsp;  & |
 | 赋值运算符    |	= 及其扩展（+= -= 等）          |   += -=
 | 条件运算符    |	             ?:               | *
 | 逗号运算符    |       	    ，                | *
 | 下标运算符    |           	[]               |  *
 
 - 四、流程控制
-    > 1.支持条件控制if、循环控制while、for<br>
-    > 不允许悬空else，所以改用 elsif ，支持break、continue、return语句<br>
+    > 1.支持条件控制if、循环控制while、for，if必须后面使用{}<br>
+    > ```
+    > if( a == 0){
+    >     print("a is 0 \n");
+    > }
+    > ```
+    > 2.不允许悬空else，所以改用 elsif ，支持break、continue、return语句<br>
+    > ```
+    > if( a == 0){
+    >     print("a is 0 \n");
+    > } elseif (a == 1){
+    >     print("a is 1 \n");    
+    > }else{
+    >     print("a isn't 0 or 1\n");
+    > }
+    > ```
 
 
 ##### 各文件介绍
@@ -110,4 +124,10 @@ print("YBX is the most handsome man in NCEPU\n");
 &emsp;其实也可以不用该通用模块的方案就是使用[valgrind](http://valgrind.org/)
 ```bash
 valgrind ybx
+```
+
+#### 注意事项
+因为这里使用的是bison代替yacc，所以默认生成文件不是 y.tab.c 和 y.tab.h 而是 ybx.tab.c 和 ybx.tab.h 。所以添加```--yacc ```来兼容yacc
+```
+bison --yacc -dv ybx.y
 ```
