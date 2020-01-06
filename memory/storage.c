@@ -50,7 +50,7 @@ struct MEM_Storage_tag {
 
 #define larger(a, b) (((a) > (b)) ? (a) : (b))
 
-// �������򿪣�һ���洢��
+// 打开创建一个存储器	
 MEM_Storage	MEM_open_storage_func(MEM_Controller controller,
 								  char *filename, int line, int page_size)
 {
@@ -71,7 +71,7 @@ MEM_Storage	MEM_open_storage_func(MEM_Controller controller,
 	return storage;
 }
 
-// ��һ���洢���з����ڴ�
+// 从存储器中分配内存	
 void* MEM_storage_malloc_func(MEM_Controller controller,
 	char *filename, int line, MEM_Storage storage,
 	size_t size)

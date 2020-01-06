@@ -52,9 +52,10 @@ int	main(int argc, char **argv)
 		exit(1);
 	}
 
+	//让 ybx 支持C语言调用——>见 YBX_dev.h 可以找到如何从 ybx 调用c语言的函数
 	interpreter = YBX_create_interpreter();				//创建解释器
 	YBX_compile(interpreter, fp);						//编译,生成分析树
-	YBX_interpret(interpreter);							//解释
+	YBX_interpret(interpreter);							//运行解释器
 	YBX_dispose_interpreter(interpreter);				//释放解释器
 
 	MEM_dump_blocks(stdout);							// 检查内存是否释放

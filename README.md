@@ -25,11 +25,15 @@ To install :
 ```
 
 #### Demo
-![actions](picture/out.gif) 
+本程序支持两种使用方式
+##### 方式一：文本方式
+![actions.gif(网络不好可能浏览不了)](picture/out.gif) 
+##### 方式二：交互方式
+![交互方式](picture/4.png)
 
 #### 应用介绍
 - 一、程序结构
-&emsp;ybx程序支持<b>顶层结构</b>，即使在函数外面也可以书写执行语句，即不需要写
+&emsp;1.ybx程序支持<b>顶层结构</b>，即使在函数外面也可以书写执行语句，即不需要写
 ```c++
 int main(int argc, char *argv[])
 {
@@ -50,9 +54,14 @@ public class HelloYbx {
 ```c++
 print("YBX is the most handsome man in NCEPU\n");
 ```
+
+&emsp;2.建议文件结尾```.ybx```
+```
+eg:test.ybx
+```
 - 二、变量
     > 1.实现布尔类型、整数类型、实数型、字符串类型、指针类型<br>
-    > 2.变量使用的时候<b>不需要声明</b>就可以直接使用，在赋初值的时候就包含声明的过程，所以，如果直接引用一个还没有付初值的变量会报错<br>
+    > 2.无类型语言：变量使用的时候<b>不需要声明</b>就可以直接使用，在赋初值的时候就包含声明的过程，所以，如果直接引用一个还没有付初值的变量会报错<br>
     > 3.变量命名格式：字母开头+[数字/字母]*
 
 - 三、运算符
@@ -91,21 +100,56 @@ print("YBX is the most handsome man in NCEPU\n");
 
 - 一、模块
     主要是由3个模块组成
-    > 主程序模块<br>
-    > 通用模块 ———— 内存管理模块:memory MEM.h<br>
-    > 通用模块 ———— 提醒报错模块:debug DBG.h
+    > 主程序模块 YBX<br>
+    > 通用模块 ———— 内存管理模块:MEM.h memory/ <br>
+    > 通用模块 ———— 提醒报错模块:DBG.h debug/ 
+    >
+    > 其中“内存管理模块”与“提醒报错模块”不是 ybx 特有，仅编译器优化
+
+
+- 命名规范：
+    > 因为C语言不具备C++的命名空间、java的包管理机制，规定命名规范避免出现重名现象。
+    > 
+    > 1.模块前标示CRB、MEM、DBG 
+    > 
+    > 2.类型名：首字母大写
+    >   eg:```YBX_Interpreter、YBX_Value```
+    >
+    > 3.变量名/函数名：小写字母
+    >   eg:```ybx_nv_print_proc```
+    > 
+    > 4.宏：全部大写
+    >   eg:```PUBLIC_YBX_H_INCLUDED```
+    > 
+    > 5.对外开放的函数：模块名(大写)+功能
+    >   eg:```YBX_add_global_variable```
+    > 
+    > 6.不对外开放的函数：模块名(小写)+功能
+    >   eg:```ybx_get_operator_string```
+    > 
+    > 7.静态变量：st_开头
+    >   eg:```st_current_interpreter```
+    > 
+
+- 公有头文件：
+    > YBX.h——使用 ybx 解释器
+    > YBX_dev.h—— 编写 ybx 的内置函数
+    > 
+
+- 私有头文件：
+    > ybxcompiler.h——定义了编译器的全部变量类型，变量空间、语法、流程控制、解释器定义、运算符号、表达式、函数、形参
+
 
 - 二、主程序模块YBX
     > 1.YBX.h 定义解释器，并对解释器的行为进行定义<br>
     > 2.YBX_dev.h 定义ybx语言中的变量类型，以及如何调用C语言函数，如何注册到解释器的规则<br>
-    > 3.crowbar.h 解释器定义  YBX_Interpreter_tag  <br>
+    > 3.ybx.h 解释器定义  YBX_Interpreter_tag  <br>
         &emsp;1)MEM_Storage         interpreter_storage;		// 解释器的存储器，在解释器生成的时候生成，解释器结束的时候释放，由 util.c 的 ybx_malloc 分配<br>
         &emsp;2)MEM_Storage         execute_storage;			// 运行时的存储器<br>
         &emsp;3)Variable            *variable;					// 变量列表<br>
         &emsp;4)FunctionDefinition  *function_list;				// 函数列表<br>
         &emsp;5)StatementList       *statement_list;			// 语句列表（表达式也是一种语句）<br>
         &emsp;6)int                 current_line_number;		// 当前行号，当出现错误时用于指明出错位置的行号<br>
-
     > 4.词法分析 ———— ybx.l<br>
     > 5.分析树的构建 ———— ybx.y、create.c<br>
     > 5.优化 ———— 常量折叠<br>

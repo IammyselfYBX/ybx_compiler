@@ -64,7 +64,7 @@ void DBG_set_expression(char *expression);						// 设置表达式
 	  DBG_debug_write_func arg)
 #endif /* DBG_NO_DEBUG */
 
-// 调试的布尔型？
+// 调试的布尔型
 typedef enum {
     DBG_TRUE = 1,
     DBG_FALSE = 0

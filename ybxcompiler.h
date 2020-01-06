@@ -2,10 +2,11 @@
 * Copyright (c) 2019,YBX is the most handsome man in NCEPU
 * All rights reserved.
 *
-* 文件名称: ybx.h
+* 文件名称: bxcompiler.h
 * 文件标识: 见README.md
 * 摘要: 定义了编译器的全部变量类型，变量空间、语法、流程控制、解释器定义、运算符号、表达式、函数、形参
-*      这是一个私有的头文件，尽对编译器内部可见
+*      
+* 		这是一个私有的头文件，尽对编译器内部可见
 *
 * 当前版本: 1.1
 * 作者: 杨秉学
@@ -187,7 +188,7 @@ typedef struct StatementList_tag
 // 一个语句块，即由一系列语句组成
 typedef struct 
 {
-	StatementList       *statement_list;
+	StatementList       *statement_list;		//语句链表，用链表存储每一条语句
 } Block;
 
 typedef struct IdentifierList_tag 
@@ -265,6 +266,7 @@ struct Statement_tag
 };
 
 // 形参列表（注意形参是没有值的）
+//将形参存储到链表，因为 ybx 是无类型语言，所以不需要存储数据类型
 typedef struct ParameterList_tag 
 {
 	char        *name;						// 形参名称
@@ -282,24 +284,25 @@ typedef struct FunctionDefinition_tag
 {
 	char *name;								// 函数名
 	FunctionDefinitionType type;			// 函数类型：用户自定义或者内置类型
+
 	union 
 	{
 		struct								// 用户自定义函数
 		{
-			ParameterList *parameter;		// 形参列表
-			Block *block;					// 语句块
-		} crowbar_f;
+			ParameterList *parameter;		// 形参列表，形参的定义
+			Block *block;					// 语句块，函数的主体
+		} ybx_f;
 
 		struct								// 内置函数
 		{
 			YBX_NativeFunctionProc *proc;	// 内置函数指针
 		} native_f;
-
 	} u;
+
 	struct FunctionDefinition_tag *next;	// 下一个函数定义
 } FunctionDefinition;
 
-// 变量
+// 变量链表
 typedef struct Variable_tag 
 {
 	char        *name;						// 变量名
@@ -359,10 +362,10 @@ struct YBX_Interpreter_tag
 
 	MEM_Storage         interpreter_storage;		// 解释器的存储器，在解释器生成的时候生成，解释器结束的时候释放
 	MEM_Storage         execute_storage;			// 运行时的存储器
-	Variable            *variable;					// 变量列表
-	FunctionDefinition  *function_list;				// 函数列表
+	Variable            *variable;					// 变量链表，通过该链表得到全部变量
+	FunctionDefinition  *function_list;				// 函数链表，
 	StatementList       *statement_list;			// 语句列表（表达式也是一种语句）
-	int                 current_line_number;		// 当前行号，当出现错误时用于指明出错位置
+	int                 current_line_number;		// 当前行号，当出现错误时用于指明出错位置，仅编译的时候使用
 };
 
 

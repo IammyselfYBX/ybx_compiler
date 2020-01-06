@@ -146,10 +146,10 @@ void YBX_add_global_variable(YBX_Interpreter *inter, char *identifier,YBX_Value 
     Variable    *new_variable;
 
     new_variable = ybx_execute_malloc(inter, sizeof(Variable));						// 运行时内存分配
-    new_variable->name = ybx_execute_malloc(inter, strlen(identifier) + 1);	// 运行时分配内存
+    new_variable->name = ybx_execute_malloc(inter, strlen(identifier) + 1);	        // 运行时分配内存
     strcpy(new_variable->name, identifier);						
     new_variable->next = inter->variable;
-    inter->variable = new_variable;																	// 加入到全局的变量列表中
+    inter->variable = new_variable;													// 加入到全局的变量列表中
     new_variable->value = *value;
 }
 

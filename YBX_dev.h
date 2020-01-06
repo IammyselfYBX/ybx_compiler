@@ -62,9 +62,18 @@ typedef struct {
     } u;
 } YBX_Value;
 
-// 调用c语言的函数
+// 从 ybx 调用c语言的函数
 typedef YBX_Value YBX_NativeFunctionProc(YBX_Interpreter *interpreter,
                                          int arg_count, YBX_Value *args);
+/*
+ * 这里的 interpreter 是指向解释器的指针
+ * arg_count 表示传参的个数
+ * args 表示传参都是什么
+ * 
+ * 就像
+ * int main(int argc, char *argv[])
+*/
+
 // 将函数c函数注册到解释器中
 void YBX_add_native_function(YBX_Interpreter *interpreter,
                              char *name, YBX_NativeFunctionProc *proc);
