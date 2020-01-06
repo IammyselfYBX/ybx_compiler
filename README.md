@@ -23,6 +23,7 @@ To install :
 
   6. IF you want to uninstall , Run "make uninstall"
 ```
+
 #### Demo
 ![actions](picture/out.gif) 
 
@@ -60,7 +61,7 @@ print("YBX is the most handsome man in NCEPU\n");
 |   :----:    |             :----:               |
 | 算术运算符    |+&emsp;-&emsp;*&emsp;/&emsp;%    |
 | 关系运算符    |<&emsp;<=&emsp;==&emsp;>&emsp;>=&emsp;!= |
-| 逻辑运算符	|           ！&emsp;&&&emsp;\|\|&emsp;   | - 取反
+| 逻辑运算符	 |           ！&emsp;&&&emsp;\|\|&emsp;   | - 取反
 | 位运算符	    | << &emsp; >> &emsp; ~ &emsp; \| &emsp; ^ &emsp;  & |
 | 赋值运算符    |	= 及其扩展（+= -= 等）          |   += -=
 | 条件运算符    |	             ?:               | *
