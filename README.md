@@ -23,13 +23,8 @@ To install :
 
   6. IF you want to uninstall , Run "make uninstall"
 ```
-#### Actions
-- step 1
-![actions](picture/1.png) 
-- step 2
-![actions](picture/2.png)
-- step 3
-![actions](picture/.png) 
+#### Demo
+![actions](picture/out.gif) 
 
 #### 应用介绍
 - 一、程序结构
