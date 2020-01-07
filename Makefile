@@ -41,6 +41,7 @@ y.tab.h : ybx.y
 	bison --yacc -dv ybx.y
 y.tab.c : ybx.y
 	bison --yacc -dv ybx.y
+	
 lex.yy.c : ybx.l ybx.y y.tab.h
 	flex ybx.l
 y.tab.o: y.tab.c ybxcompiler.h MEM.h
