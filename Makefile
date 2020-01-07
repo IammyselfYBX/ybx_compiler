@@ -36,6 +36,7 @@ install:
 uninstall:
 	sudo rm /bin/ybx
 
+
 y.tab.h : ybx.y
 	bison --yacc -dv ybx.y
 y.tab.c : ybx.y
