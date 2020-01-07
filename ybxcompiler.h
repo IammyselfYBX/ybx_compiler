@@ -157,7 +157,7 @@ typedef struct
 	ArgumentList *argument;						// 形参列表
 } FunctionCallExpression;
 
-// 表达式
+// 表达式定义
 struct Expression_tag 
 {
 	ExpressionType type;													// 表达式类型
@@ -275,7 +275,7 @@ typedef struct ParameterList_tag
 
 typedef enum 
 {
-	CROWBAR_FUNCTION_DEFINITION = 1,		// 用户自定义函数
+	YBX_FUNCTION_DEFINITION = 1,		// 用户自定义函数
 	NATIVE_FUNCTION_DEFINITION				// 内置函数
 } FunctionDefinitionType;
 

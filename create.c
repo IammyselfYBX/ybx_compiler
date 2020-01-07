@@ -4,7 +4,8 @@
 *
 * 文件名称: create.c
 * 文件标识: 见README.md
-* 摘要: 定义ybx语言中的变量类型，以及如何调用C语言函数，如何注册到解释器的规则
+* 摘要:分析树的构建——与ybx.y一起定义  
+*      定义ybx语言中的变量类型，以及如何调用C语言函数，如何注册到解释器的规则
 *      面向内置函数开发人员的接口
 *
 * 当前版本: 1.1
@@ -38,9 +39,9 @@ void ybx_function_define(char *identifier, ParameterList *parameter_list,Block *
 
     f = ybx_malloc(sizeof(FunctionDefinition));
     f->name = identifier;
-    f->type = CROWBAR_FUNCTION_DEFINITION;								                // 函数类型为用户自定义
-    f->u.crowbar_f.parameter = parameter_list;									    	// 形参列表
-    f->u.crowbar_f.block = block;														// 函数体（就是语句块）
+    f->type = YBX_FUNCTION_DEFINITION;								                // 函数类型为用户自定义
+    f->u.ybx_f.parameter = parameter_list;									    	// 形参列表
+    f->u.ybx_f.block = block;														// 函数体（就是语句块）
     f->next = inter->function_list;
     inter->function_list = f;
 }

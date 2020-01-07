@@ -71,11 +71,12 @@ void YBX_compile(YBX_Interpreter *interpreter, FILE *fp)
 }
 
 // 调用解释器
+//程序运行起点
 void YBX_interpret(YBX_Interpreter *interpreter)
 {
 	interpreter->execute_storage = MEM_open_storage(0);								// 分配运行时存储器
-	ybx_add_std_fp(interpreter);																			// 将标准输入、标准输出、标准错误添加到全局变量列表中
-	ybx_execute_statement_list(interpreter, NULL, interpreter->statement_list);	// 开始执行第一条语句
+	ybx_add_std_fp(interpreter);													// 将标准输入、标准输出、标准错误添加到全局变量列表中,将stdin，stdout，stderr添加到全局变量中
+	ybx_execute_statement_list(interpreter, NULL, interpreter->statement_list);		// 开始按照链表顺序执行第一条语句
 }
 
 // 释放全局的字符串

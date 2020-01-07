@@ -4,7 +4,7 @@
 *
 * 文件名称: eval.c
 * 文件标识: 见README.md
-* 摘要: 表达式评估
+* 摘要: 表达式评估——判断表达式到底是什么类型的表达式(是布尔表达式，还是int表达式，还是其他什么的)
 *      根据生成的分析树自顶向下分析，对分析的结构进行运算
 *
 *
@@ -122,7 +122,7 @@ static YBX_Value eval_identifier_expression(YBX_Interpreter *inter,
     YBX_Value   v;
     Variable    *vp;
 
-    vp = ybx_search_local_variable(env, expr->u.identifier);								// 在局部环境中寻找该变量是否已经定义过
+    vp = ybx_search_local_variable(env, expr->u.identifier);					// 在局部环境中寻找该变量是否已经定义过
     if (vp != NULL) 
 	{
         v = vp->value;
@@ -155,14 +155,14 @@ static YBX_Value eval_assign_expression(YBX_Interpreter *inter, LocalEnvironment
                        char *identifier, Expression *expression)
 {
     YBX_Value   v;
-    Variable    *left;																				// 赋值号左边的变量
+    Variable    *left;																// 赋值号左边的变量
 
     v = eval_expression(inter, env, expression);									// 此expression是赋值号右边的表达式，需要对它进行表达式处理
 
     left = ybx_search_local_variable(env, identifier);								// 查找赋值号左边的变量是否已经在局部环境中定义过
     if (left == NULL) 
 	{
-        left = search_global_variable_from_env(inter, env, identifier);		// 在全局环境中是否有该变量的定义
+        left = search_global_variable_from_env(inter, env, identifier);		        // 在全局环境中是否有该变量的定义
     }
 
     if (left != NULL) 
@@ -216,7 +216,7 @@ static void eval_binary_int(YBX_Interpreter *inter, ExpressionType operator,
 	{
         result->type = YBX_INT_VALUE;
     }
-	else if (dkc_is_compare_operator(operator))				// 是否为比较操作符
+	else if (dkc_is_compare_operator(operator))				    // 是否为比较操作符
 	{
         result->type = YBX_BOOLEAN_VALUE;
     } 
@@ -694,7 +694,7 @@ static YBX_Value call_native_function(YBX_Interpreter *inter, LocalEnvironment *
 }
 
 // 调用自定义函数
-static YBX_Value call_crowbar_function(YBX_Interpreter *inter, LocalEnvironment *env,
+static YBX_Value call_ybx_function(YBX_Interpreter *inter, LocalEnvironment *env,
                       Expression *expr, FunctionDefinition *func)
 {
     YBX_Value   value;
@@ -706,7 +706,7 @@ static YBX_Value call_crowbar_function(YBX_Interpreter *inter, LocalEnvironment 
     local_env = alloc_local_environment();											// 申请局部环境					
 
     for (arg_p = expr->u.function_call_expression.argument,
-             param_p = func->u.crowbar_f.parameter;
+             param_p = func->u.ybx_f.parameter;
          arg_p;
          arg_p = arg_p->next, param_p = param_p->next) 
 	{
@@ -729,7 +729,7 @@ static YBX_Value call_crowbar_function(YBX_Interpreter *inter, LocalEnvironment 
     }
 
     result = ybx_execute_statement_list(inter, local_env,						// 执行这个函数中的语句列表
-                                        func->u.crowbar_f.block
+                                        func->u.ybx_f.block
                                         ->statement_list);
     if (result.type == RETURN_STATEMENT_RESULT) 
 	{
@@ -763,8 +763,8 @@ static YBX_Value eval_function_call_expression(YBX_Interpreter *inter, LocalEnvi
     }
     switch (func->type)
 	{
-    case CROWBAR_FUNCTION_DEFINITION:													// 用户自定义的函数
-        value = call_crowbar_function(inter, env, expr, func);
+    case YBX_FUNCTION_DEFINITION:													// 用户自定义的函数
+        value = call_ybx_function(inter, env, expr, func);
         break;
     case NATIVE_FUNCTION_DEFINITION:															// 内置函数
         value = call_native_function(inter, env, expr, func->u.native_f.proc);

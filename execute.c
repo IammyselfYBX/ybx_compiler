@@ -4,7 +4,7 @@
 *
 * 文件名称: execute.c
 * 文件标识: 见README.md
-* 摘要: 实现执行语句部分
+* 摘要: 实现执行语句部分，语句是怎么执行的
 *      这里的语句是指if while else等句子，其他的都是表达式
 *
 *
@@ -48,7 +48,7 @@ static StatementResult execute_expression_statement(YBX_Interpreter *inter, Loca
 
 // 执行全局语句
 static StatementResult execute_global_statement(YBX_Interpreter *inter, LocalEnvironment *env,
-                         Statement *statement)
+                         Statement *statement)      //如果传递的函数还没有运行，则env为NULL
 {
     IdentifierList *pos;
     StatementResult result;
@@ -160,7 +160,8 @@ static StatementResult execute_while_statement(YBX_Interpreter *inter, LocalEnvi
     YBX_Value   cond;
 
     result.type = NORMAL_STATEMENT_RESULT;
-    for (;;) {
+    for (;;) {  //死循环
+        /* 通过条件语句判断 */
         cond = ybx_eval_expression(inter, env, statement->u.while_s.condition);
         if (cond.type != YBX_BOOLEAN_VALUE) {
             ybx_runtime_error(statement->u.while_s.condition->line_number,
@@ -268,35 +269,35 @@ static StatementResult execute_continue_statement(YBX_Interpreter *inter, LocalE
     return result;
 }
 
-// 语句执行
+// 语句执行——根据不同的 Statement 类型进行不同的处理
 static StatementResult execute_statement(YBX_Interpreter *inter, LocalEnvironment *env, Statement *statement)
 {
     StatementResult result;
 
     result.type = NORMAL_STATEMENT_RESULT;
 
-    switch (statement->type)																	// 根据语句的类型选择相应的语句执行调用
+    switch (statement->type)												// 根据语句的类型选择相应的语句执行调用
 	{
     case EXPRESSION_STATEMENT:
         result = execute_expression_statement(inter, env, statement);		// 表达式语句
         break;
     case GLOBAL_STATEMENT:
-        result = execute_global_statement(inter, env, statement);				// 带有global的语句
+        result = execute_global_statement(inter, env, statement);			// 带有global的语句
         break;
     case IF_STATEMENT:
-        result = execute_if_statement(inter, env, statement);						// if语句
+        result = execute_if_statement(inter, env, statement);				// if语句
         break;
     case WHILE_STATEMENT:
-        result = execute_while_statement(inter, env, statement);				// while语句
+        result = execute_while_statement(inter, env, statement);			// while语句
         break;
     case FOR_STATEMENT:
-        result = execute_for_statement(inter, env, statement);					// for语句
+        result = execute_for_statement(inter, env, statement);				// for语句
         break;
     case RETURN_STATEMENT:
-        result = execute_return_statement(inter, env, statement);				// return语句
+        result = execute_return_statement(inter, env, statement);			// return语句
         break;
     case BREAK_STATEMENT:
-        result = execute_break_statement(inter, env, statement);				// break语句
+        result = execute_break_statement(inter, env, statement);			// break语句
         break;
     case CONTINUE_STATEMENT:
         result = execute_continue_statement(inter, env, statement);			// continue语句

@@ -20,7 +20,7 @@
 #include "ybxcompiler.h"
 #include "y.tab.h"
 
-/* 一个功能性函数-都要加 */
+/* 一个功能性函数——习惯性用法：不能少 */
 int yywrap(void)
 {
     return 1;
@@ -32,7 +32,9 @@ static void increment_line_number(void)
     ybx_get_current_interpreter()->current_line_number++;
 }
 %}
+
 %start COMMENT STRING_LITERAL_STATE
+
 %%
 <INITIAL>"function"     return FUNCTION;
 <INITIAL>"if"           return IF;
@@ -71,12 +73,14 @@ static void increment_line_number(void)
     yylval.identifier = ybx_create_identifier(yytext);
     return IDENTIFIER;
 }
+
 <INITIAL>([1-9][0-9]*)|"0" {
     Expression  *expression = ybx_alloc_expression(INT_EXPRESSION);
     sscanf(yytext, "%d", &expression->u.int_value);
     yylval.expression = expression;
     return INT_LITERAL;
 }
+
 <INITIAL>[0-9]+\.[0-9]+ {
     Expression  *expression = ybx_alloc_expression(DOUBLE_EXPRESSION);
     sscanf(yytext, "%lf", &expression->u.double_value);
